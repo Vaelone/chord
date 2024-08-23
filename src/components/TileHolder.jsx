@@ -1,16 +1,16 @@
-// src/components/TileHolder.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Tile from './Tile';
-import SearchResult from './SearchResult'; // Import if needed
-import { getAccessToken, searchTracks } from '../utils/spotify';
+import { getArtistImages, getAccessToken } from '../utils/spotify';
+import { searchTracks } from '../utils/spotify';
 
 const TileHolder = () => {
+  let artist1 = "Drake";
+  let artist2 = "Ariana Grande"
   const [tiles, setTiles] = useState([
     {
       id: 1,
-      iconSrc:
-        'https://static.dezeen.com/uploads/2016/08/kanye-west-ikea-collaboration-square_dezeen_936_0.jpg',
-      songInfo: 'Kanye West',
+      iconSrc: '', // Initialize with empty string
+      songInfo: artist1,
       isInputTile: false,
     },
     {
@@ -22,16 +22,39 @@ const TileHolder = () => {
     },
     {
       id: 3,
-      iconSrc:
-        'https://hips.hearstapps.com/hmg-prod/images/2011-mtv-video-music-awards---arrivals.jpg',
-      songInfo: 'Rick Ross',
+      iconSrc: '', // Initialize with empty string
+      songInfo: artist2,
       isInputTile: false,
     },
   ]);
 
   const [tracks, setTracks] = useState([]);
-  const [lastArtist, setLastArtist] = useState("Kanye West");
-  const [finalArtist, setFinalArtist] = useState("Rick Ross");
+  const [lastArtist, setLastArtist] = useState(artist1);
+  const [finalArtist, setFinalArtist] = useState(artist2);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      const artist1Images = await getArtistImages(artist1);
+      const artist2Images = await getArtistImages(artist2);
+      
+      setTiles((prevTiles) => prevTiles.map((tile) => {
+        if (tile.songInfo === artist1) {
+          return {
+            ...tile,
+            iconSrc: artist1Images[0]?.url || 'default-image.png',
+          };
+        } else if (tile.songInfo === artist2) {
+          return {
+            ...tile,
+            iconSrc: artist2Images[0]?.url || 'default-image.png',
+          };
+        }
+        return tile;
+      }));
+    };
+
+    fetchImages();
+  }, []); // Empty dependency array to run only once
 
   const addTile = () => {
     setTiles((prevTiles) => [
@@ -48,23 +71,22 @@ const TileHolder = () => {
 
   const handleSelect = (track) => {
     const clickedArtists = track.artists.map((artist) => artist.name);
+    
+    // Default color is red
+    let backgroundColor = 'red'; 
   
+    if (clickedArtists.length > 0) {
+      const firstArtist = clickedArtists[0];
+      if (firstArtist === lastArtist) {
+        // Check if finalArtist is also included to set the color to green or yellow
+        backgroundColor = clickedArtists.includes(finalArtist) ? 'green' : 'yellow';
+      }
+    }
+  
+    // Update the tiles with the new track information
     setTiles((prevTiles) => {
       const newTiles = prevTiles.map((tile) => {
         if (tile.isInputTile && !tile.songInfo) {
-          let backgroundColor = 'yellow';
-  
-          if (!clickedArtists.includes(lastArtist)) {
-            backgroundColor = 'red';
-          } else if (clickedArtists.includes(finalArtist)) {
-            backgroundColor = 'green';
-          } else {
-            if (clickedArtists.length > 1) {
-              setLastArtist(clickedArtists[1]);
-            }
-          }
-  
-          // Update the current tile with the selected track info
           return {
             ...tile,
             iconSrc: track.album.images[0]?.url || 'default-image.png',
@@ -80,12 +102,11 @@ const TileHolder = () => {
       const needsNewInputTile = !clickedArtists.includes(finalArtist) || !clickedArtists.includes(lastArtist);
   
       if (needsNewInputTile) {
-        // Find the index to insert the new input tile before the final artist tile
-        const finalArtistIndex = newTiles.findIndex(tile => tile.songInfo === 'Rick Ross'); // Adjust as needed
+        const finalArtistIndex = newTiles.findIndex(tile => tile.songInfo === finalArtist);
   
         if (finalArtistIndex > -1) {
           newTiles.splice(
-            finalArtistIndex, // Insert before the final artist tile
+            finalArtistIndex,
             0,
             {
               iconSrc:
@@ -95,7 +116,6 @@ const TileHolder = () => {
             }
           );
         } else {
-          // If finalArtist tile is not found, append the new input tile to the end
           newTiles.push({
             iconSrc:
               'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png',
@@ -108,10 +128,14 @@ const TileHolder = () => {
       return newTiles;
     });
   
+    // Update lastArtist only if the background color is yellow
+    if (backgroundColor === 'yellow' && clickedArtists.length > 1) {
+      setLastArtist(clickedArtists[1]);
+    }
+  
     // Clear the search results after selection
     setTracks([]);
   };
-  
   
   
   
