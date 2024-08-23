@@ -1,29 +1,78 @@
 import React, { useState } from 'react';
-import './app.css';
+import SearchResult from './components/SearchResult';
+import { getAccessToken, searchTracks } from './utils/spotify';
+const App = () => {
+    const [tracks, setTracks] = useState([]);
+    const [lastArtist, setLastArtist] = useState("Kanye West");
+    const [finalArtist, setFinalArtist] = useState("Rick Ross");
 
-function App() {
-  const [tiles, setTiles] = useState([
-    {
-      id: 1,
-      artist: 'Kanye West',
-      imgSrc: 'https://static.dezeen.com/uploads/2016/08/kanye-west-ikea-collaboration-square_dezeen_936_0.jpg',
-    },
-    {
-      id: 2,
-      artist: '',
-      imgSrc: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png',
-      isInputTile: true,
-    },
-    {
-      id: 3,
-      artist: 'Rick Ross',
-      imgSrc: 'https://hips.hearstapps.com/hmg-prod/images/2011-mtv-video-music-awards---arrivals.jpg',
-    }
-  ]);
+    const handleSelect = (track) => {
+        const targetTile = document.querySelector('.inputtile');
+        const targetIcon = targetTile.querySelector('#icon');
+        const infoDiv = targetTile.querySelector('#inputdiv');
+        const clickedArtists = track.artists.map(artist => artist.name);
+        targetIcon.src = track.album.images[0]?.url || 'default-image.png';
+        infoDiv.textContent = `${track.name} - ${clickedArtists.join(', ')}`;
+        targetTile.classList.remove('inputtile');
+        infoDiv.removeAttribute("id");
 
-  const [lastArtist, setLastArtist] = useState('Kanye West');
-  const [finalArtist] = useState('Rick Ross');
+        if (clickedArtists[0] !== lastArtist) {
+            infoDiv.style.backgroundColor = "red";
+            addTile();
+        } else if (clickedArtists.includes(finalArtist)) {
+            infoDiv.style.backgroundColor = "green";
+        } else {
+            infoDiv.style.backgroundColor = "yellow";
+            if (clickedArtists.length > 1) {
+                setLastArtist(clickedArtists[1]);
+            }
+            addTile();
+        }
+    };
 
-  async function getAccessToken() {
-    const clientId = '49c28caa0121477f90ce472ead0b8d65';
-    const clientSecret = '1a4845aa02af424688d5ccb
+    const handleInputChange = async (event) => {
+        const query = event.target.value;
+        const accessToken = await getAccessToken();
+
+        if (query.length > 0) {
+            const tracks = await searchTracks(query, accessToken);
+            setTracks(tracks);
+        } else {
+            clearResults();
+        }
+    };
+
+    const clearResults = () => {
+        setTracks([]);
+    };
+
+    return (
+        <div id="overall">
+            <div id="titleholder">
+                <h1 id="title">Chord</h1>
+            </div>
+            <div id="tileholder">
+              <div id="tile" className="artist-tile">
+                <img id="icon" src="https://static.dezeen.com/uploads/2016/08/kanye-west-ikea-collaboration-square_dezeen_936_0.jpg" alt="Kanye West" />
+                <div id="songInfo">Kanye West</div>
+              </div>
+              <div id="tile" className="inputtile">
+                  <img id="icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png" alt="Question mark" />
+                  <div id="inputdiv">
+                      <input id="guess" type="text" onInput={handleInputChange} />
+                      {tracks.map(track => (
+                          <SearchResult key={track.id} track={track} onSelect={handleSelect} />
+                      ))}
+                  </div>
+              </div>
+              <div id="tile" className="artist-tile">
+                <img id="icon" src="https://hips.hearstapps.com/hmg-prod/images/2011-mtv-video-music-awards---arrivals.jpg" alt="Rick Ross" />
+                <div id="songInfo">Rick Ross</div>
+              </div>
+            </div>
+        </div>
+    );
+};
+
+export default App;
+ 
