@@ -1,4 +1,3 @@
-// src/components/Tile.jsx
 import React from 'react';
 import SearchResult from './SearchResult';
 
@@ -9,14 +8,15 @@ const Tile = ({
   handleInputChange,
   onSelect,
   tracks,
-  backgroundColor,
+  textColor, // Accept textColor as a prop
 }) => {
-  const tileStyle = backgroundColor
-    ? { backgroundColor }
-    : {};
+  const songInfoStyle = {
+    color: textColor || '#1db954', // Default color if textColor is not provided
+    fontWeight: 'bold',
+  };
 
   return (
-    <div id="tile" className={isInputTile ? 'inputtile' : 'artist-tile'} style={tileStyle}>
+    <div id="tile" className={isInputTile ? 'inputtile' : 'artist-tile'}>
       <img id="icon" src={iconSrc} alt="icon" />
       {isInputTile ? (
         <div id="inputdiv">
@@ -26,7 +26,7 @@ const Tile = ({
           ))}
         </div>
       ) : (
-        <div id="songInfo">{songInfo}</div>
+        <div id="songInfo" style={songInfoStyle}>{songInfo}</div>
       )}
     </div>
   );

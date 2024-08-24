@@ -5,7 +5,8 @@ import { searchTracks } from '../utils/spotify';
 
 const TileHolder = () => {
   let artist1 = "Drake";
-  let artist2 = "Ariana Grande"
+  let artist2 = "Ariana Grande";
+  
   const [tiles, setTiles] = useState([
     {
       id: 1,
@@ -73,13 +74,13 @@ const TileHolder = () => {
     const clickedArtists = track.artists.map((artist) => artist.name);
     
     // Default color is red
-    let backgroundColor = 'red'; 
+    let textColor = 'red'; 
   
     if (clickedArtists.length > 0) {
       const firstArtist = clickedArtists[0];
       if (firstArtist === lastArtist) {
         // Check if finalArtist is also included to set the color to green or yellow
-        backgroundColor = clickedArtists.includes(finalArtist) ? 'green' : 'yellow';
+        textColor = clickedArtists.includes(finalArtist) ? 'green' : 'yellow';
       }
     }
   
@@ -91,7 +92,7 @@ const TileHolder = () => {
             ...tile,
             iconSrc: track.album.images[0]?.url || 'default-image.png',
             songInfo: `${track.name} - ${clickedArtists.join(', ')}`,
-            backgroundColor,
+            textColor, // Set text color based on the result
             isInputTile: false,
           };
         }
@@ -128,8 +129,8 @@ const TileHolder = () => {
       return newTiles;
     });
   
-    // Update lastArtist only if the background color is yellow
-    if (backgroundColor === 'yellow' && clickedArtists.length > 1) {
+    // Update lastArtist only if the text color is yellow
+    if (textColor === 'yellow' && clickedArtists.length > 1) {
       setLastArtist(clickedArtists[1]);
     }
   
@@ -137,9 +138,6 @@ const TileHolder = () => {
     setTracks([]);
   };
   
-  
-  
-
   const handleInputChange = async (event) => {
     const query = event.target.value;
     const accessToken = await getAccessToken();
@@ -163,7 +161,7 @@ const TileHolder = () => {
           onSelect={handleSelect}
           handleInputChange={handleInputChange}
           tracks={tracks}
-          backgroundColor={tile.backgroundColor}
+          textColor={tile.textColor} // Pass text color as a prop
         />
       ))}
     </div>
