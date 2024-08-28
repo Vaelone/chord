@@ -32,6 +32,7 @@ const TileHolder = () => {
   const [lastArtists, setLastArtists] = useState([artist1]); // Updated to an array
   const [finalArtist, setFinalArtist] = useState(artist2);
   const [gameComplete, setGameComplete] = useState(false); // New state to track game completion
+  const [displayUpwards, setDisplayUpwards] = useState(false); // State to control upwards display
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -61,8 +62,8 @@ const TileHolder = () => {
     if (gameComplete) return; // Exit if the game is complete
   
     const clickedArtists = track.artists.map((artist) => artist.name);
-    let textColor = 'red'; 
-    
+    let textColor = 'red';
+  
     if (clickedArtists.length > 0) {
       if (lastArtists.includes(clickedArtists[0])) {
         textColor = clickedArtists.includes(finalArtist) ? 'green' : 'yellow';
@@ -70,7 +71,7 @@ const TileHolder = () => {
     }
   
     setTiles((prevTiles) => {
-      const newTiles = prevTiles.map((tile) => {
+      let newTiles = prevTiles.map((tile) => {
         if (tile.isInputTile && !tile.songInfo) {
           return {
             ...tile,
@@ -83,25 +84,41 @@ const TileHolder = () => {
         return tile;
       });
   
-      // Determine if we need to add a new input tile
-      const needsNewInputTile = !clickedArtists.includes(finalArtist) || !lastArtists.some(artist => clickedArtists.includes(artist));
+      // Count the number of non-input tiles
+      const nonInputTilesCount = newTiles.filter(tile => !tile.isInputTile).length;
   
-      // Add a new input tile if needed
-      if (needsNewInputTile) {
-        const existingInputTile = newTiles.find(tile => tile.isInputTile && !tile.songInfo);
-        if (!existingInputTile) { // Only add a new input tile if one doesn't already exist
-          const finalArtistIndex = newTiles.findIndex(tile => tile.songInfo === finalArtist);
+      // Enable upwards display if there are 6 or more tiles
+      if (nonInputTilesCount >= 5) {
+        setDisplayUpwards(true);
+      }
+  
+      // Determine if we need to add a new input tile
+      const needsNewInputTile =
+        !clickedArtists.includes(finalArtist) ||
+        !lastArtists.some((artist) => clickedArtists.includes(artist));
+  
+      // Add a new input tile if needed and total non-input tiles are less than 8
+      if (needsNewInputTile && nonInputTilesCount < 8) {
+        const existingInputTile = newTiles.find(
+          (tile) => tile.isInputTile && !tile.songInfo
+        );
+        if (!existingInputTile) {
+          const finalArtistIndex = newTiles.findIndex(
+            (tile) => tile.songInfo === finalArtist
+          );
           if (finalArtistIndex > -1) {
             newTiles.splice(finalArtistIndex, 0, {
               id: Date.now(), // Unique ID for new tile
-              iconSrc: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png',
+              iconSrc:
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png',
               songInfo: '',
               isInputTile: true,
             });
           } else {
             newTiles.push({
               id: Date.now(), // Unique ID for new tile
-              iconSrc: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png',
+              iconSrc:
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png',
               songInfo: '',
               isInputTile: true,
             });
@@ -110,8 +127,8 @@ const TileHolder = () => {
       }
   
       // Mark game as complete if the correct condition is met
-      if (textColor === 'green') {
-        setGameComplete(true); // Set game as complete if both artists are found
+      if (textColor === 'green' || nonInputTilesCount >= 8) {
+        setGameComplete(true); // Set game as complete if both artists are found or max guesses are reached
       }
   
       // Update lastArtists
@@ -125,6 +142,8 @@ const TileHolder = () => {
     // Clear the search results after selection
     setTracks([]); // Reset the tracks state here
   };
+  
+  
 
   const handleInputChange = async (event) => {
     const query = event.target.value;
@@ -150,6 +169,7 @@ const TileHolder = () => {
           handleInputChange={handleInputChange}
           tracks={tracks}
           textColor={tile.textColor}
+          displayUpwards={displayUpwards} // Pass the displayUpwards prop
         />
       ))}
     </div>

@@ -108,3 +108,12 @@ input {
   margin: 0 auto;
   display: block;
 }
+#inputdiv {
+  display: flex;
+  flex-direction: column-reverse; /* This makes the results stack upwards */
+  align-items: flex-end; /* Align the results to the right */
+}
+
+.search-result {
+  margin-bottom: 5px; /* Adjust the spacing between results */
+}
