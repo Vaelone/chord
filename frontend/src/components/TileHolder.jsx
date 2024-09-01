@@ -3,6 +3,7 @@ import Tile from './Tile';
 import { getArtistImages, getAccessToken } from '../utils/spotify';
 import { searchTracks } from '../utils/spotify';
 import { saveStatistics, getStatistics } from '../utils/localStorage';
+import StatsPage from './StatsPage';
 
 const TileHolder = () => {
   const artist1 = "Drake";
@@ -35,6 +36,7 @@ const TileHolder = () => {
   const [gameComplete, setGameComplete] = useState(false);
   const [displayUpwards, setDisplayUpwards] = useState(false);
   const [statistics, setStatistics] = useState(getStatistics() || { gamesPlayed: 0, wins: 0, guesses: [] });
+  const [showStatsPage, setShowStatsPage] = useState(false);
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -135,6 +137,8 @@ const TileHolder = () => {
         };
         setStatistics(newStats);
         saveStatistics(newStats); // Save statistics to localStorage
+
+        setShowStatsPage(true); // Trigger StatsPage to show after the game is complete
       }
 
       if (textColor === 'yellow') {
@@ -174,6 +178,7 @@ const TileHolder = () => {
           displayUpwards={displayUpwards} 
         />
       ))}
+      {showStatsPage && <StatsPage onClose={() => setShowStatsPage(false)} />} {/* Show StatsPage after the game is complete */}
     </div>
   );
 };
