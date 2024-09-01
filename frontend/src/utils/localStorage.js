@@ -1,11 +1,13 @@
-// src/utils/localStorage.js
+// utils/localStorage.js
 
-export const saveLocalStats = (stats) => {
+// Save statistics to localStorage
+export const saveStatistics = (stats) => {
     localStorage.setItem('gameStats', JSON.stringify(stats));
   };
   
-  export const loadLocalStats = () => {
-    const storedStats = localStorage.getItem('gameStats');
-    return storedStats ? JSON.parse(storedStats) : null;
+  // Retrieve statistics from localStorage
+  export const getStatistics = () => {
+    const stats = localStorage.getItem('gameStats');
+    return stats ? JSON.parse(stats) : null;
   };
   

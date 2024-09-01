@@ -11,24 +11,18 @@ const Tile = ({
   tracks,
   textColor,
   displayUpwards,
-  style, // Accept the style prop
+  className, // Accept the className prop
 }) => {
   // Style for the song info text, ensuring it is centered
   const songInfoStyle = {
     color: textColor || 'rgb(255,255,255)',
     fontWeight: 'bold',
-    // display: 'flex',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    // height: '100%', // Ensure it takes up the full height of the container
-    textAlign: 'center', // Center text horizontally
+    textAlign: 'center',
   };
 
   return (
     <div 
-      id="tile" 
-      className={isInputTile ? 'inputtile' : 'artist-tile'} 
-      style={style} // Apply the style prop to the main div
+      className={`${isInputTile ? 'inputtile' : 'artist-tile'} ${className}`} // Apply the className prop
     >
       <img id="icon" src={iconSrc} alt="icon" style={{ width: '100%', height: 'auto', marginBottom: '10px' }} />
       {isInputTile ? (

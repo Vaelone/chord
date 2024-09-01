@@ -10,7 +10,7 @@ const SearchResult = ({ track, onSelect }) => {
         alt={`${track.name} cover`}
       />
       <div className="searchtitle">{track.name}</div>
-      <div className="searchartist">{track.artists.map(artist => artist.name).join(', ')}</div>
+      {/* <div className="searchartist">{track.artists.map(artist => artist.name).join(', ')}</div> */}
     </div>
   );
 };

@@ -15,15 +15,15 @@ const Title = () => {
   };
 
   return (
-    <div id="titleholder" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <h1 id="title" style={{ textAlign: 'left' }}>Chord</h1>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-        <img src="../assets/stats-icon.png" alt="Stats" onClick={() => handleIconClick('stats')} style={{ cursor: 'pointer' }} />
-        <img src="../assets/Info-icon.png" alt="Info" onClick={() => handleIconClick('info')} style={{ cursor: 'pointer' }} />
-        <img src="../assets/settings-icon.png" alt="Settings" onClick={() => handleIconClick('settings')} style={{ cursor: 'pointer' }} />
+    <div id="titleholder" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+      <h1 class="title" style={{ textAlign: 'left', marginRight: 'auto' }}>Chord</h1>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginLeft: 'auto', height: '70%', width: '20%'}}>
+        <img className="button" src="https://static.thenounproject.com/png/5639-200.png" alt="Stats" onClick={() => handleIconClick('stats')} style={{ cursor: 'pointer' }} />
+        <img className="button" src="https://www.svgrepo.com/show/12134/info-circle.svg" alt="Info" onClick={() => handleIconClick('info')} style={{ cursor: 'pointer' }} />
+        {/* <img className="button" src="https://www.svgrepo.com/show/13688/settings.svg" alt="Settings" onClick={() => handleIconClick('settings')} style={{ cursor: 'pointer' }} /> */}
       </div>
 
-      {currentPage === 'stats' && <StatsPage gameStats={gameStats} onClose={closePage} />}
+      {currentPage === 'stats' && <StatsPage onClose={closePage} />}
       {currentPage === 'info' && <InfoPage onClose={closePage} />}
       {currentPage === 'settings' && <SettingsPage onClose={closePage} />}
     </div>
