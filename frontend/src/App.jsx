@@ -1,4 +1,3 @@
-// src/App.jsx
 import React from 'react';
 import TileHolder from './components/TileHolder';
 import Title from './components/Title';

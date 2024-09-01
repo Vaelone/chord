@@ -1,4 +1,3 @@
-// src/components/SearchResult.jsx
 import React from 'react';
 
 const SearchResult = ({ track, onSelect }) => {

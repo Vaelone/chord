@@ -35,7 +35,7 @@ const Tile = ({
             zIndex: 10,
           }}
         >
-          <input id="guess" type="text" onChange={handleInputChange} />
+          <input id="guess" type="text" onChange={handleInputChange} placeholder='Enter linking song here...'/>
           <div style={{ position: 'absolute', bottom: displayUpwards ? '100%' : 'auto', top: displayUpwards ? 'auto' : '100%' }}>
             {tracks.map((track) => (
               <SearchResult key={track.id} track={track} onSelect={onSelect} />

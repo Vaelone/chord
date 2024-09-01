@@ -47,7 +47,7 @@ const InfoPage = ({ onClose }) => {
         />
       </div>
       <div style={{ textAlign: 'center', marginBottom: '10px' }}>
-        Each song must be made by one of the last song's features
+        Each song must be made by one of the last song's artists
       </div>
       <div style={{ textAlign: 'center', marginBottom: '10px' }}>
         Red - None of the previous features are this song's primary artist
