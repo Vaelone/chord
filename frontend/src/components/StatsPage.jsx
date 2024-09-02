@@ -26,7 +26,7 @@ const StatsPage = ({ onClose }) => {
   let val4 = Math.max((guessCounts[4]/maxArrayVal)*80,8)
   let val5 = Math.max((guessCounts[5]/maxArrayVal)*80,8)
   let val6 = Math.max(((guessCounts[6]-losses)/maxArrayVal)*80,8)
-  const valLost = Math.max((losses/maxArrayVal)*80,8)
+  let valLost = Math.max((losses/maxArrayVal)*80,8)
   if(maxArrayVal ==0) {
     val1 = val2 = val3 = val4 = val5 = val6 = valLost = 8;
   }
