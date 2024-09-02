@@ -235,6 +235,20 @@ input {
   font-size: max(2.5vw,2vh);
   
 }
+@media(min-aspect-ratio: 2000/1080) {
+  .artist-tile {
+    width: 14vw;
+    height: 35vh;
+  }
+  .inputtile {
+    width: 15vw;
+    height: 35vh;
+  }
+  #guess {
+    width: 13vw;
+  }
+
+}
 @media (min-aspect-ratio: 9/18) and (max-aspect-ratio: 12/18) {
   #tileholder {
     grid-template-columns: 1fr 1fr;
