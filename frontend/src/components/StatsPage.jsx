@@ -19,14 +19,17 @@ const StatsPage = ({ onClose }) => {
     } 
   });
   const losses = stats.gamesPlayed - stats.wins;
-  const maxArrayVal = Math.max(...Object.values(guessCounts));
-  const val1 = Math.max((guessCounts[1]/maxArrayVal)*80,8)
-  const val2 = Math.max((guessCounts[2]/maxArrayVal)*80,8)
-  const val3 = Math.max((guessCounts[3]/maxArrayVal)*80,8)
-  const val4 = Math.max((guessCounts[4]/maxArrayVal)*80,8)
-  const val5 = Math.max((guessCounts[5]/maxArrayVal)*80,8)
-  const val6 = Math.max(((guessCounts[6]-losses)/maxArrayVal)*80,8)
+  const maxArrayVal = Math.max(losses,Math.max(...Object.values(guessCounts)));
+  let val1 = Math.max((guessCounts[1]/maxArrayVal)*80,8)
+  let val2 = Math.max((guessCounts[2]/maxArrayVal)*80,8)
+  let val3 = Math.max((guessCounts[3]/maxArrayVal)*80,8)
+  let val4 = Math.max((guessCounts[4]/maxArrayVal)*80,8)
+  let val5 = Math.max((guessCounts[5]/maxArrayVal)*80,8)
+  let val6 = Math.max(((guessCounts[6]-losses)/maxArrayVal)*80,8)
   const valLost = Math.max((losses/maxArrayVal)*80,8)
+  if(maxArrayVal ==0) {
+    val1 = val2 = val3 = val4 = val5 = val6 = valLost = 8;
+  }
   return (
     <div id = "statsPage" >
       <div id="statsTitle" >
