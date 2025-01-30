@@ -37,13 +37,13 @@ const Tile = ({
         >
           <input id="guess" type="text" onChange={handleInputChange} placeholder='Enter linking song here...'/>
           <div style={{ position: 'absolute', bottom: displayUpwards ? '100%' : 'auto', top: displayUpwards ? 'auto' : '100%' }}>
-            {tracks.map((track) => (
+            {tracks.slice(0,2).map((track) => (
               <SearchResult key={track.id} track={track} onSelect={onSelect} />
             ))}
           </div>
         </div>
       ) : (
-        <div id="songInfo" style={songInfoStyle}>
+        <div className="songInfo" style={songInfoStyle}>
           {highlightedText ? (
             songInfo.split(highlightedText).reduce((prev, current, i) => {
               if (!i) return [current];

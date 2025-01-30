@@ -31,7 +31,7 @@ const TileHolder = () => {
   ]);
 
   const [tracks, setTracks] = useState([]);
-  const [lastArtists, setLastArtists] = useState([artist1]);
+  const [lastArtists, setLastArtists] = useState([artist1,artist1]);
   const [finalArtist, setFinalArtist] = useState(artist2);
   const [gameComplete, setGameComplete] = useState(false);
   const [displayUpwards, setDisplayUpwards] = useState(false);
@@ -67,9 +67,8 @@ const TileHolder = () => {
 
     const clickedArtists = track.artists.map((artist) => artist.name);
     let textColor = 'red';
-
     if (clickedArtists.length > 0) {
-      if (lastArtists.includes(clickedArtists[0])) {
+      if (lastArtists.slice(1).includes(clickedArtists[0])) {
         textColor = clickedArtists.includes(finalArtist) ? 'green' : 'yellow';
       }
     }
@@ -95,7 +94,7 @@ const TileHolder = () => {
       }
 
       const needsNewInputTile =
-        !clickedArtists.includes(finalArtist) ||
+        (!clickedArtists.includes(finalArtist) || textColor == 'red' || textColor == 'yellow')||
         !lastArtists.some((artist) => clickedArtists.includes(artist));
 
       if (needsNewInputTile && nonInputTilesCount < 8) {

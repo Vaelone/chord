@@ -19,7 +19,7 @@ body {
   grid-template-rows: auto 1fr; /* Adjust rows to fit content better */
 }
 
-#songInfo {
+.songInfo {
   overflow: auto;
 }
 
@@ -235,7 +235,8 @@ input {
   font-size: max(2.5vw,2vh);
   
 }
-@media(min-aspect-ratio: 2000/1080) {
+@media(min-aspect-ratio: 1288/740) {
+  /* What we are attempting to adjust for here are long screens*/
   .artist-tile {
     width: 14vw;
     height: 35vh;
@@ -247,8 +248,17 @@ input {
   #guess {
     width: 13vw;
   }
+  .tile-medium {
+    width: 10vw;
+    height: 26vh;
+  }
+
+  .songInfo {
+    font-size: 1.75vh;
+  }
 
 }
+
 @media (min-aspect-ratio: 9/18) and (max-aspect-ratio: 12/18) {
   #tileholder {
     grid-template-columns: 1fr 1fr;
@@ -258,7 +268,7 @@ input {
     width: 30vw; /* Approximately 1/2 of the container width */
     height: 22vh;
     font-size: 2.5vw;
-  }
+  } 
   .inputtile {
     width: 30vw; /* Approximately 1/2 of the container width */
     height: 22vh;

@@ -46,7 +46,7 @@ const InfoPage = ({ onClose }) => {
           className="tile-medium" // Pass the className prop
         />
       </div>
-      <div style={{ textAlign: 'center', marginBottom: '10px' }}>
+      <div style={{ textAlign: 'center', marginTop:'20px', marginBottom: '10px' }}>
         Each song must be made by one of the last song's artists
       </div>
       <div style={{ textAlign: 'center', marginBottom: '10px' }}>
