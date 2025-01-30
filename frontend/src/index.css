@@ -9,6 +9,7 @@ body {
   background-color: silver;
   color: #1db954;
   font-family: Montserrat;
+  touch-action: manipulation;
 }
 
 #overall {
