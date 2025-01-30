@@ -262,24 +262,25 @@ input {
 
 @media (min-aspect-ratio: 9/18) and (max-aspect-ratio: 12/18) {
   #tileholder {
+    height: 88%;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(4, 1fr);
   }
   .artist-tile {
-    width: 30vw; /* Approximately 1/2 of the container width */
-    height: 22vh;
+    width: 26vw; /* Approximately 1/2 of the container width */
+    height: 18vh;
     font-size: 2.5vw;
   } 
   .inputtile {
-    width: 30vw; /* Approximately 1/2 of the container width */
-    height: 22vh;
+    width: 26vw; /* Approximately 1/2 of the container width */
+    height: 18vh;
     font-size: 2vw;
   }
   #icon {
     height: 100%;
   }
   .songsearch {
-    width: 30vw;
+    width: 26vw;
     height: 3.5vh;
     font-size: 2vw;
   }
@@ -289,8 +290,9 @@ input {
 
   }
   input {
-    width: 85%;
-    font-size: 2vw;
+    width: 86%;
+    height: 65%;
+    font-size: 1.6vw;
   }
   #statsTitle {
     font-size: 8vw;
@@ -357,13 +359,13 @@ input {
   #tileholder {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(4, 1fr);
-    height: calc(var(--vh) - var(--header-height));
+    height: 88%;
     gap: 2vw;
     padding: 1vw;
   }
   .artist-tile {
-    width: 37vw; /* Let grid handle the sizing */
-    height: 22vh;
+    width: 32vw; /* Let grid handle the sizing */
+    height: 18vh;
     font-size: 2.5vw;
     margin: 0; /* Remove any margins */
   }
