@@ -6,6 +6,34 @@ import { saveStatistics, getStatistics } from '../utils/localStorage';
 import StatsPage from './StatsPage';
 
 const TileHolder = () => {
+  useEffect(() => {
+    const setVH = () => {
+      // Get the actual viewport height
+      const vh = window.innerHeight;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+
+    // Initial set
+    setVH();
+
+    // Update on resize and orientation change
+    window.addEventListener('resize', setVH);
+    window.addEventListener('orientationchange', setVH);
+    
+    // Add Chrome-specific event for address bar show/hide
+    window.addEventListener('scroll', setVH);
+    
+    // Some mobile Chrome versions need this
+    document.addEventListener('visibilitychange', setVH);
+
+    return () => {
+      window.removeEventListener('resize', setVH);
+      window.removeEventListener('orientationchange', setVH);
+      window.removeEventListener('scroll', setVH);
+      document.removeEventListener('visibilitychange', setVH);
+    };
+  }, []);
+
   const artist1 = "Drake";
   const artist2 = "Ariana Grande";
 
