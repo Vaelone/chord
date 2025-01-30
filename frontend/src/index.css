@@ -262,7 +262,7 @@ input {
 
 @media (min-aspect-ratio: 9/18) and (max-aspect-ratio: 12/18) {
   #tileholder {
-    height: 88%;
+    height: 84%;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(4, 1fr);
   }
@@ -359,7 +359,7 @@ input {
   #tileholder {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(4, 1fr);
-    height: 88%;
+    height: 84%;
     gap: 2vw;
     padding: 1vw;
   }
