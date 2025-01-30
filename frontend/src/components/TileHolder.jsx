@@ -7,30 +7,31 @@ import StatsPage from './StatsPage';
 
 const TileHolder = () => {
   useEffect(() => {
-    const setVH = () => {
-      // Get the actual viewport height
+    const setDimensions = () => {
+      // Set viewport height
       const vh = window.innerHeight;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
+      
+      // Set header height
+      const headerElement = document.getElementById('titleholder');
+      if (headerElement) {
+        const headerHeight = headerElement.offsetHeight;
+        document.documentElement.style.setProperty('--header-height', `${headerHeight}px`);
+      }
     };
-
-    // Initial set
-    setVH();
-
-    // Update on resize and orientation change
-    window.addEventListener('resize', setVH);
-    window.addEventListener('orientationchange', setVH);
+  
+    setDimensions();
     
-    // Add Chrome-specific event for address bar show/hide
-    window.addEventListener('scroll', setVH);
-    
-    // Some mobile Chrome versions need this
-    document.addEventListener('visibilitychange', setVH);
-
+    window.addEventListener('resize', setDimensions);
+    window.addEventListener('orientationchange', setDimensions);
+    window.addEventListener('scroll', setDimensions);
+    document.addEventListener('visibilitychange', setDimensions);
+  
     return () => {
-      window.removeEventListener('resize', setVH);
-      window.removeEventListener('orientationchange', setVH);
-      window.removeEventListener('scroll', setVH);
-      document.removeEventListener('visibilitychange', setVH);
+      window.removeEventListener('resize', setDimensions);
+      window.removeEventListener('orientationchange', setDimensions);
+      window.removeEventListener('scroll', setDimensions);
+      document.removeEventListener('visibilitychange', setDimensions);
     };
   }, []);
 

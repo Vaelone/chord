@@ -357,11 +357,9 @@ input {
   #tileholder {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(4, 1fr);
-    height: calc(var(--vh) - /* height of your header */ - env(safe-area-inset-bottom));
+    height: calc(var(--vh) - var(--header-height));
     gap: 2vw;
     padding: 1vw;
-    width: 100%;
-    box-sizing: border-box; /* Include padding in width calculation */
   }
   .artist-tile {
     width: 37vw; /* Let grid handle the sizing */
