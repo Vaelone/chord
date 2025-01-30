@@ -68,9 +68,16 @@ const TileHolder = () => {
     const clickedArtists = track.artists.map((artist) => artist.name);
     let textColor = 'red';
     if (clickedArtists.length > 0) {
-      if (lastArtists.slice(1).includes(clickedArtists[0])) {
-        textColor = clickedArtists.includes(finalArtist) ? 'green' : 'yellow';
+      if(lastArtists.length == 1){
+        if (lastArtists[0] == clickedArtists[0]) {
+          textColor = clickedArtists.includes(finalArtist) ? 'green' : 'yellow';
+        }
+      } else{
+        if (lastArtists.slice(1).includes(clickedArtists[0])) {
+          textColor = clickedArtists.includes(finalArtist) ? 'green' : 'yellow';
+        }
       }
+      
     }
 
     setTiles((prevTiles) => {
