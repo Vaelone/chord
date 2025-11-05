@@ -1,10 +1,10 @@
-# fly.toml app configuration file generated for chord on 2025-11-04T20:10:30Z
+# fly.toml app configuration file generated for chord on 2025-11-04T20:19:46Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
 app = 'chord'
-primary_region = 'iad'
+primary_region = 'ams'
 
 [build]
 
