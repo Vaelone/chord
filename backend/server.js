@@ -10,8 +10,8 @@ app.use(express.json());
 app.use('/api', spotifyRoutes);
 
 const PORT = process.env.PORT || 3001;
-const HOST = '0.0.0.0'; // ✅ Add this
+const HOST = '0.0.0.0'; // 
 
-app.listen(PORT, HOST, () => {gigi
+app.listen(PORT, HOST, () => {
   console.log(`Server running at http://${HOST}:${PORT}`);
 });
