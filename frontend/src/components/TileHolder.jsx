@@ -35,8 +35,8 @@ const TileHolder = () => {
     };
   }, []);
 
-  const artist1 = "Drake";
-  const artist2 = "Ariana Grande";
+  const artist1 = "Kanye West";
+  const artist2 = "Justin Bieber";
 
   const [tiles, setTiles] = useState([
     {
