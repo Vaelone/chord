@@ -7,6 +7,7 @@ const app = express();
 // CORS configuration
 const allowedOrigins = [
   'http://localhost:3000',       // local frontend
+  'http://localhost:5173',       // local frontend
   'https://playchord.vercel.app' // deployed frontend
 ];
 
