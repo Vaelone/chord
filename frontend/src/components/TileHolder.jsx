@@ -4,8 +4,9 @@ import { getArtistImages, getAccessToken } from '../utils/spotify';
 import { searchTracks } from '../utils/spotify';
 import { saveStatistics, getStatistics } from '../utils/localStorage';
 import StatsPage from './StatsPage';
+import { getArtistForGenreAndEra } from '../utils/gameConfig';
 
-const TileHolder = () => {
+const TileHolder = ({ artist1Genre, artist1Era, artist2Genre, artist2Era }) => {
   useEffect(() => {
     const setDimensions = () => {
       // Set viewport height
@@ -35,8 +36,8 @@ const TileHolder = () => {
     };
   }, []);
 
-  const artist1 = "Kanye West";
-  const artist2 = "Justin Bieber";
+  const artist1 = getArtistForGenreAndEra(artist1Genre, artist1Era);
+  const artist2 = getArtistForGenreAndEra(artist2Genre, artist2Era);
 
   const [tiles, setTiles] = useState([
     {
