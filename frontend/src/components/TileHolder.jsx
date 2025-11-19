@@ -61,8 +61,9 @@ const TileHolder = ({ artist1Genre, artist1Era, artist2Genre, artist2Era }) => {
   ]);
 
   const [tracks, setTracks] = useState([]);
-  const [lastArtists, setLastArtists] = useState([artist1,artist1]);
-  const [finalArtist, setFinalArtist] = useState(artist2);
+  const [lastArtists, setLastArtists] = useState([artist1, artist1]);
+  // const [finalArtist, setFinalArtist] = useState(artist2);
+  const finalArtist = artist2;
   const [gameComplete, setGameComplete] = useState(false);
   const [displayUpwards, setDisplayUpwards] = useState(false);
   const [statistics, setStatistics] = useState(getStatistics() || { gamesPlayed: 0, wins: 0, guesses: [] });
@@ -193,7 +194,19 @@ const TileHolder = ({ artist1Genre, artist1Era, artist2Genre, artist2Era }) => {
 
     if (query.length > 0) {
       const fetchedTracks = await searchTracks(query, accessToken);
-      setTracks(fetchedTracks);
+      
+      // Filter tracks to only show songs by the current connecting artist(s)
+      const currentArtist = lastArtists.length === 1 ? lastArtists[0] : lastArtists[lastArtists.length - 1];
+      
+      const filteredTracks = fetchedTracks.filter(track => 
+        track.artists.some(artist => 
+          lastArtists.some(lastArtist => 
+            artist.name.toLowerCase() === lastArtist.toLowerCase()
+          )
+        )
+      );
+      
+      setTracks(filteredTracks);
     } else {
       setTracks([]);
     }

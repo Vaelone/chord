@@ -1,0 +1,48 @@
+/* Tile.css */
+
+/* Image inside tile */
+#icon {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+/* Input container */
+#inputdiv {
+  display: flex;
+  position: relative;
+  z-index: 10;
+}
+
+/* Input field */
+#guess {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 14px;
+}
+
+/* Search results container */
+.search-results-container {
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+/* Song info text */
+.songInfo {
+  font-weight: bold;
+  text-align: center;
+  color: rgb(255, 255, 255);
+}
+
+/* Optional tile containers if used elsewhere */
+/* .inputtile { 
+   Add layout or dimensions if needed 
+ } 
+
+.artist-tile { 
+    Add layout or dimensions if needed 
+} */

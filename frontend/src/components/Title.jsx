@@ -14,10 +14,12 @@ const Title = ({
 }) => {
   const [currentPage, setCurrentPage] = useState(null);
 
+  // Cause info/stats page to display
   const handleIconClick = (page) => {
     setCurrentPage(page);
   };
 
+  // close the info/stats page so we can just see the classic app screen
   const closePage = () => {
     setCurrentPage(null);
   };
