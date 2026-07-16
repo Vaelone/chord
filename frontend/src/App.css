@@ -1,15 +1,6 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-#title {
-  font-size: 5vw;
-  position: absolute;
-  top: 0;
-  left: calc(50% - 8vw);
-}
-#tileholder {
-  display: flex;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }

@@ -1,6 +1,9 @@
 import React from 'react';
+import { getDisplaySongTitle } from '../utils/songTitle';
 
 const SearchResult = ({ track, onSelect }) => {
+  const artists = track.artists.map((artist) => artist.name);
+
   return (
     <div className="songsearch" onClick={() => onSelect(track)}>
       <img
@@ -8,8 +11,8 @@ const SearchResult = ({ track, onSelect }) => {
         src={track.album.images[0]?.url || 'default-image.png'}
         alt={`${track.name} cover`}
       />
-      <div className="searchtitle">{track.name}</div>
-      {/* <div className="searchartist">{track.artists.map(artist => artist.name).join(', ')}</div> */}
+      <div className="searchtitle">{getDisplaySongTitle(track.name, artists)}</div>
+      <div className="searchartist">{artists.join(', ')}</div>
     </div>
   );
 };

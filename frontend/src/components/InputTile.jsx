@@ -3,18 +3,24 @@ import SearchResult from './SearchResult';
 
 const InputTileContent = ({
   handleInputChange,
+  inputValue,
   tracks,
   onSelect,
-  displayUpwards
+  displayUpwards,
+  noMatchHint,
+  currentArtistLabel
 }) => {
+  const showHint = noMatchHint && tracks.length === 0;
+
   return (
     <div
-      id="inputdiv"
+      className="inputdiv"
       style={{ flexDirection: displayUpwards ? 'column-reverse' : 'column' }}
     >
       <input
-        id="guess"
+        className="guess-input"
         type="text"
+        value={inputValue}
         onChange={handleInputChange}
         placeholder="Enter linking song here..."
       />
@@ -26,9 +32,19 @@ const InputTileContent = ({
           top: displayUpwards ? 'auto' : '100%',
         }}
       >
-        {tracks.slice(0, 3).map((track) => (
-          <SearchResult key={track.id} track={track} onSelect={onSelect} />
-        ))}
+        {showHint ? (
+          <div className="search-hint">
+            No songs featuring{' '}
+            <span className="search-hint-artist">
+              {currentArtistLabel || 'this artist'}
+            </span>
+            . Try one of their collaborations.
+          </div>
+        ) : (
+          tracks.slice(0, 3).map((track) => (
+            <SearchResult key={track.id} track={track} onSelect={onSelect} />
+          ))
+        )}
       </div>
     </div>
   );
