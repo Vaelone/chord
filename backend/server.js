@@ -6,21 +6,24 @@ const app = express();
 
 // CORS configuration
 const allowedOrigins = [
-  'http://localhost:3000',       // local frontend
-  'http://localhost:5173',       // local frontend
-  'https://playchord.vercel.app' // deployed frontend
+  'https://playchord.vercel.app',
 ];
+
+const isLocalDevOrigin = (origin) =>
+  /^http:\/\/localhost(:\d+)?$/.test(origin) ||
+  /^http:\/\/127\.0\.0\.1(:\d+)?$/.test(origin);
 
 app.use(cors({
   origin: function(origin, callback) {
     // allow requests with no origin (like mobile apps or curl)
     if (!origin) return callback(null, true);
 
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
+    if (isLocalDevOrigin(origin) || allowedOrigins.includes(origin)) {
+      return callback(null, true);
     }
-    return callback(null, true);
+
+    const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+    return callback(new Error(msg), false);
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true // if you send cookies/auth headers

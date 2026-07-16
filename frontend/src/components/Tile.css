@@ -1,48 +1,255 @@
-/* Tile.css */
-
-/* Image inside tile */
-#icon {
-  width: 100%;
+.artist-tile,
+.inputtile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: var(--tile-width, 200px);
+  max-width: 100%;
   height: auto;
-  margin-bottom: 10px;
+  background: none;
+  border: none;
+  box-shadow: none;
+  overflow: visible;
 }
 
-/* Input container */
-#inputdiv {
+.tile-photo-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.tile-marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--tile-photo-size, 160px) * 0.28);
+  height: calc(var(--tile-photo-size, 160px) * 0.28);
+  min-width: 22px;
+  min-height: 22px;
+  border-radius: 50%;
+  font-size: calc(var(--tile-font-size, 14px) * 0.9);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text-primary);
+  background: rgba(18, 18, 18, 0.92);
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  transform: translate(-18%, -18%);
+  pointer-events: none;
+  user-select: none;
+}
+
+.tile-marker--start {
+  padding: 0;
+}
+
+.tile-marker-pin-icon {
+  width: 68%;
+  height: 68%;
+  display: block;
+}
+
+.tile-marker--goal {
+  color: var(--accent-bright);
+  border-color: rgba(29, 185, 84, 0.55);
+  padding: 0;
+}
+
+.tile-marker-flag-icon {
+  width: 74%;
+  height: 74%;
+  display: block;
+}
+
+.tile-marker--step {
+  font-size: calc(var(--tile-font-size, 14px) * 0.95);
+}
+
+.tile-photo {
+  width: var(--tile-photo-size, 160px);
+  height: var(--tile-photo-size, 160px);
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  border: 6px solid transparent;
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.tile-photo--valid {
+  border-color: var(--accent-bright);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(29, 185, 84, 0.35);
+}
+
+.tile-photo--invalid {
+  border-color: #ff6b6b;
+  border-style: dashed;
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    0 0 16px rgba(255, 107, 107, 0.25);
+}
+
+.artist-tile:hover .tile-photo:not(.tile-photo--valid):not(.tile-photo--invalid),
+.inputtile:hover .tile-photo:not(.tile-photo--valid):not(.tile-photo--invalid) {
+  transform: scale(1.03);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55), 0 0 30px rgba(29, 185, 84, 0.1);
+}
+
+.artist-tile:hover .tile-photo--valid,
+.inputtile:hover .tile-photo--valid {
+  transform: scale(1.03);
+}
+
+.artist-tile:hover .tile-photo--invalid,
+.inputtile:hover .tile-photo--invalid {
+  transform: scale(1.03);
+}
+
+.tile-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.tile-photo.is-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px dashed rgba(29, 185, 84, 0.35);
+  box-shadow: none;
+  animation: photoPulse 3s ease-in-out infinite;
+}
+
+.tile-placeholder {
+  font-size: calc(var(--tile-photo-size, 160px) * 0.35);
+  font-weight: 300;
+  color: rgba(29, 185, 84, 0.45);
+  line-height: 1;
+  user-select: none;
+}
+
+@keyframes photoPulse {
+  0%, 100% {
+    border-color: rgba(29, 185, 84, 0.25);
+    box-shadow: 0 0 0 0 rgba(29, 185, 84, 0);
+  }
+  50% {
+    border-color: rgba(29, 185, 84, 0.55);
+    box-shadow: 0 0 24px 4px rgba(29, 185, 84, 0.1);
+  }
+}
+
+.songInfo {
+  margin-top: calc(var(--tile-gap, 16px) * 0.6);
+  padding: 0 2px;
+  width: 100%;
+  font-size: var(--tile-font-size, 14px);
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.songInfo-title {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.songInfo-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+.artist-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  max-width: 100%;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: calc(var(--tile-font-size, 14px) * 0.78);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid transparent;
+}
+
+.artist-chip-check {
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.artist-chip--linked {
+  color: var(--accent-bright);
+  background: rgba(29, 185, 84, 0.15);
+  border-color: var(--accent-bright);
+}
+
+.artist-chip--failed {
+  color: #ff8a8a;
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid #ff6b6b;
+  border-style: dashed;
+}
+
+#inputdiv,
+.inputdiv {
   display: flex;
   position: relative;
   z-index: 10;
-}
-
-/* Input field */
-#guess {
   width: 100%;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  outline: none;
-  font-size: 14px;
+  margin-top: calc(var(--tile-gap, 16px) * 0.6);
+  padding: 0;
 }
 
-/* Search results container */
+#guess,
+.guess-input {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 8px 10px;
+  display: block;
+  text-align: center;
+  font-family: inherit;
+  font-size: var(--tile-font-size, 14px);
+  font-weight: 500;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.06);
+  border: none;
+  border-radius: 999px;
+  outline: none;
+  transition: background var(--transition), box-shadow var(--transition);
+}
+
+#guess::placeholder,
+.guess-input::placeholder {
+  color: var(--text-muted);
+  font-size: calc(var(--tile-font-size, 14px) * 0.9);
+}
+
+#guess:focus,
+.guess-input:focus {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 2px var(--accent-dim);
+}
+
 .search-results-container {
   position: absolute;
   left: 0;
   width: 100%;
 }
-
-/* Song info text */
-.songInfo {
-  font-weight: bold;
-  text-align: center;
-  color: rgb(255, 255, 255);
-}
-
-/* Optional tile containers if used elsewhere */
-/* .inputtile { 
-   Add layout or dimensions if needed 
- } 
-
-.artist-tile { 
-    Add layout or dimensions if needed 
-} */

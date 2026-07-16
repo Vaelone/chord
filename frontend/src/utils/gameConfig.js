@@ -12,6 +12,11 @@ export const ERAS = [
   '2020s'
 ];
 
+export const DEFAULT_START_GENRES = ['Pop'];
+export const DEFAULT_START_ERAS = ['2010s', '2020s'];
+export const DEFAULT_GOAL_GENRES = ['Hip Hop'];
+export const DEFAULT_GOAL_ERAS = ['2010s', '2020s'];
+
 export const ARTIST_POOLS = {
   'Hip Hop': {
     '1990s': ['Tupac', 'The Notorious B.I.G.', 'Nas', 'Jay-Z', 'Dr. Dre', 'Snoop Dogg', 'Wu-Tang Clan', 'Ice Cube', 'Outkast', 'DMX'],
@@ -42,23 +47,17 @@ export const ARTIST_POOLS = {
   }
 };
 
-// Helper: flatten an array of arrays
-const flatten = arr => arr.reduce((a, b) => a.concat(b), []);
-
-// Updated to work with arrays of selected genres and eras
-export const getArtistForGenreAndEra = (selectedGenres, selectedEras) => {
-  // Handle empty selections - default to all
+// Build the artist pool for selected genres and eras
+export const buildArtistPool = (selectedGenres, selectedEras) => {
   const genres = selectedGenres.length === 0 ? GENRES : selectedGenres;
   const eras = selectedEras.length === 0 ? ERAS : selectedEras;
 
   let finalPool = [];
 
-  // Iterate through all selected genres
   for (const genre of genres) {
     const genrePool = ARTIST_POOLS[genre];
     if (!genrePool) continue;
 
-    // Iterate through all selected eras
     for (const era of eras) {
       const eraArtists = genrePool[era];
       if (eraArtists) {
@@ -67,10 +66,21 @@ export const getArtistForGenreAndEra = (selectedGenres, selectedEras) => {
     }
   }
 
-  // Remove duplicates (some artists appear in multiple eras/genres)
-  finalPool = [...new Set(finalPool)];
+  return [...new Set(finalPool)];
+};
 
-  if (finalPool.length === 0) return 'Unknown Artist';
+export const getArtistForGenreAndEra = (selectedGenres, selectedEras, exclude = []) => {
+  const excluded = new Set(exclude);
+  let pool = buildArtistPool(selectedGenres, selectedEras).filter(
+    (artist) => !excluded.has(artist)
+  );
 
-  return finalPool[Math.floor(Math.random() * finalPool.length)];
+  // If the filtered pool is empty, widen to all artists (still excluding matches)
+  if (pool.length === 0) {
+    pool = buildArtistPool(GENRES, ERAS).filter((artist) => !excluded.has(artist));
+  }
+
+  if (pool.length === 0) return 'Unknown Artist';
+
+  return pool[Math.floor(Math.random() * pool.length)];
 };
