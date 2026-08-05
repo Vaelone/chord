@@ -6,6 +6,8 @@ const app = express();
 
 // CORS configuration
 const allowedOrigins = [
+  'https://playchord.app',
+  'https://www.playchord.app',
   'https://playchord.vercel.app',
 ];
 
@@ -22,11 +24,12 @@ app.use(cors({
       return callback(null, true);
     }
 
-    const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-    return callback(new Error(msg), false);
+    // Deny without throwing — an Error here becomes a 500 with no CORS headers,
+    // which browsers report as "No 'Access-Control-Allow-Origin' header".
+    return callback(null, false);
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true // if you send cookies/auth headers
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
 }));
 
 app.use(express.json());
