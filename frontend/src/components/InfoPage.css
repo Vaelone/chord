@@ -6,9 +6,9 @@
   align-items: center;
   justify-content: center;
   padding: clamp(16px, 3vw, 32px);
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   animation: infoOverlayIn 0.25s ease;
 }
 

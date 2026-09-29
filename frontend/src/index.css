@@ -131,10 +131,10 @@ html[data-grid-layout="portrait"] #tileholder {
   text-overflow: ellipsis;
 }
 
-/* Dim game while a modal is open */
+/* Soften the game while a modal is open, without burying it. */
 body.modal-open #overall {
-  opacity: 0.25;
-  filter: blur(3px);
+  opacity: 0.85;
+  filter: blur(2px);
   pointer-events: none;
   transition: opacity 0.65s ease-out, filter 0.65s ease-out;
 }

@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://chord.fly.dev',
+        target: 'https://chord.vaelone-elankumaran-6cc.workers.dev',
         changeOrigin: true,
       },
     },
@@ -15,7 +15,7 @@ export default defineConfig({
   preview: {
     proxy: {
       '/api': {
-        target: 'https://chord.fly.dev',
+        target: 'https://chord.vaelone-elankumaran-6cc.workers.dev',
         changeOrigin: true,
       },
     },

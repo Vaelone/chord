@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-// Local Vite proxies /api → Fly. Production hits Fly directly unless overridden.
+// Local Vite proxies /api → the Worker. Production hits the Worker directly unless overridden.
 const API_BASE =
   import.meta.env.VITE_API_BASE_URL ??
-  (import.meta.env.DEV ? '' : 'https://chord.fly.dev');
+  (import.meta.env.DEV ? '' : 'https://chord.vaelone-elankumaran-6cc.workers.dev');
 
 export async function getAccessToken() {
   const response = await axios.get(`${API_BASE}/api/token`);

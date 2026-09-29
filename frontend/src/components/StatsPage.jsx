@@ -25,7 +25,11 @@ const StatsPage = ({ onClose }) => {
   });
 
   const maxBarVal = Math.max(losses, ...Object.values(guessCounts), 1);
-  const barHeight = (count) => Math.max((count / maxBarVal) * 100, count > 0 ? 12 : 4);
+  const barHeight = (count) => {
+    if (count <= 0) return '4px';
+    const pct = (count / maxBarVal) * 100;
+    return `max(44px, ${pct}%)`;
+  };
 
   const distribution = [
     { label: '1', count: guessCounts[1] },
@@ -92,20 +96,25 @@ const StatsPage = ({ onClose }) => {
                       <div
                         className={`stats-bar${isFail ? ' stats-bar--fail' : ''}${isLatest ? ' stats-bar--latest' : ''}`}
                         style={{
-                          height: `${
-                            isLatest && count === 0 ? 12 : barHeight(count)
-                          }%`,
+                          height: isLatest && count === 0 ? '18px' : barHeight(count),
                         }}
                       >
                         {count > 0 && <span className="stats-bar-count">{count}</span>}
                       </div>
                     </div>
-                    {isLatest && <span className="stats-bar-you">You</span>}
-                    <span
-                      className={`stats-bar-label${isFail ? ' stats-bar-label--fail' : ''}${isLatest ? ' stats-bar-label--latest' : ''}`}
-                    >
-                      {label}
-                    </span>
+                    <div className="stats-bar-meta">
+                      <span
+                        className={`stats-bar-label${isFail ? ' stats-bar-label--fail' : ''}${isLatest ? ' stats-bar-label--latest' : ''}`}
+                      >
+                        {label}
+                      </span>
+                      <span
+                        className={`stats-bar-you${isLatest ? '' : ' stats-bar-you--spacer'}`}
+                        aria-hidden={isLatest ? undefined : true}
+                      >
+                        You
+                      </span>
+                    </div>
                   </div>
                 );
               })}
